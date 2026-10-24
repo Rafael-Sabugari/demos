@@ -15,6 +15,14 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="noindex">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1d6f8c">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Odonto Vita">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 <body>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -252,5 +260,31 @@ document.addEventListener("click",e=>{
 render();
 </script>
 
+<div id="pwaBar" hidden style="position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:50;background:#fff;color:#14262e;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.25);padding:12px 14px;display:flex;gap:12px;align-items:center;font:14px/1.35 system-ui,sans-serif">
+  <img src="icon-192.png" alt="" width="40" height="40" style="border-radius:10px;flex:none">
+  <div id="pwaTxt" style="flex:1"><b>Instale o app</b><br><span style="opacity:.75">Fica na tela do celular, como um app.</span></div>
+  <button id="pwaGo" style="background:#1d6f8c;color:#fff;border:0;border-radius:999px;padding:9px 14px;font:700 14px system-ui,sans-serif;cursor:pointer">Instalar</button>
+  <button id="pwaX" aria-label="Fechar" style="background:none;border:0;font-size:20px;line-height:1;color:#52707c;cursor:pointer;padding:4px">×</button>
+</div>
+<script>
+(function(){
+  if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(function(){});
+  var standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  var closed = false; try{ closed = sessionStorage.getItem("pwaX")==="1"; }catch(e){}
+  if(standalone || closed || innerWidth > 760) return;
+  var bar = document.getElementById("pwaBar"), go = document.getElementById("pwaGo"), txt = document.getElementById("pwaTxt"), ev = null;
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  document.getElementById("pwaX").onclick = function(){ bar.hidden = true; try{ sessionStorage.setItem("pwaX","1"); }catch(e){} };
+  addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); ev = e; bar.hidden = false; });
+  go.onclick = function(){
+    if(ev){ ev.prompt(); ev.userChoice.finally(function(){ bar.hidden = true; ev = null; }); return; }
+    txt.innerHTML = ios ? "<b>No iPhone:</b> toque em <b>Compartilhar</b> (quadrado com seta) e depois em <b>Adicionar à Tela de Início</b>."
+                        : "<b>No Android:</b> abra o menu <b>⋮</b> do Chrome e toque em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>.";
+    go.hidden = true;
+  };
+  if(ios) setTimeout(function(){ bar.hidden = false; }, 1500);
+  else setTimeout(function(){ if(!ev) bar.hidden = false; }, 4000);
+})();
+</script>
 </body>
 </html>
