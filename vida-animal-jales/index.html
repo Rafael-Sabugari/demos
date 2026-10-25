@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vida Animal Jales</title>
+<meta name="description" content="Modelo de site para Vida Animal. Toque para ver como ficaria.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vida Animal · Site">
+<meta property="og:description" content="Modelo de site para Vida Animal. Toque para ver como ficaria.">
+<meta property="og:url" content="https://rafael-sabugari.github.io/demos/vida-animal-jales/">
+<meta property="og:image" content="https://rafael-sabugari.github.io/demos/vida-animal-jales/preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: calm vet clinic + pet shop landing; hero with hours card, service grid, working consultation/bath booking, FAQ, location. */
+:root{
+  --bg:#f4f9f8; --surface:#ffffff; --tint:#e6f2ef; --ink:#11302c; --muted:#4f6b66; --line:#d3e5e0;
+  --accent:#0f766e; --accent-ink:#ffffff; --accent-soft:#d2efe9; --mint:#d9822b; --warn-bg:#fff1c9; --warn-ink:#6b4a00;
+  --display:Outfit,"Trebuchet MS",sans-serif; --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:16px; --shadow:0 10px 30px rgba(17,48,44,.09);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1816; --surface:#132321; --tint:#172b28; --ink:#e4f3f0; --muted:#9dbcb6; --line:#25403c;
+  --accent:#4fc7b8; --accent-ink:#06211e; --accent-soft:#1a3a36; --mint:#f0a95c; --warn-bg:#3a2e10; --warn-ink:#f3d58b; --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1816; --surface:#132321; --tint:#172b28; --ink:#e4f3f0; --muted:#9dbcb6; --line:#25403c;
+  --accent:#4fc7b8; --accent-ink:#06211e; --accent-soft:#1a3a36; --mint:#f0a95c; --warn-bg:#3a2e10; --warn-ink:#f3d58b; --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:inherit}
+.in{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance}
+h1,h2{font-family:var(--display);font-weight:600;line-height:1.12;margin:0}
+h1{font-size:clamp(2.1rem,5.6vw,3.5rem)}
+h2{font-size:clamp(1.6rem,3.6vw,2.3rem)}
+h3{font-size:1.06rem;margin:0}
+p{margin:0}
+.muted{color:var(--muted)}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--warn-bg);color:var(--warn-ink);padding:2px 8px;border-radius:999px;vertical-align:middle}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:600 1rem var(--body);text-decoration:none;padding:13px 22px;border-radius:999px;background:var(--accent);color:var(--accent-ink);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn.alt{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.btn.sm{padding:9px 16px;font-size:.92rem}
+:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+
+/* demo strip + header */
+.strip{background:var(--warn-bg);color:var(--warn-ink);font-size:.86rem}
+.strip .in{padding-block:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand b{font-family:var(--display);font-weight:600;font-size:1.35rem;color:var(--accent)}
+nav{display:flex;gap:22px;align-items:center}
+nav a{text-decoration:none;font-weight:500;color:var(--muted)}
+nav a:hover{color:var(--ink)}
+.menu{display:none;background:none;border:1px solid var(--line);border-radius:10px;padding:8px 10px;color:var(--ink);cursor:pointer}
+@media (max-width:820px){
+  .menu{display:inline-flex}
+  nav{position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:0;background:var(--surface);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+  nav a{padding:12px 0;border-bottom:1px solid var(--line)}
+  nav .btn{margin-top:12px}
+  nav:not(.open){display:none}
+}
+
+/* hero */
+.hero .in{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding-block:56px 64px}
+.hero-copy{display:grid;gap:20px;min-width:0}
+.hero-copy .lead{font-size:1.13rem;color:var(--muted);max-width:34em}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:.93rem}
+.facts span{display:inline-flex;align-items:center;gap:6px}
+.facts svg{color:var(--mint)}
+.card-info{background:var(--surface);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;min-width:0}
+.card-info .art{background:linear-gradient(160deg,var(--accent-soft),var(--tint));display:grid;place-items:center;padding:28px 0}
+.card-info .body{padding:22px;display:grid;gap:14px}
+.row{display:flex;gap:12px;align-items:flex-start}
+.row svg{flex:none;color:var(--accent);margin-top:3px}
+.row small{display:block;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.copy{background:none;border:0;color:var(--accent);font:600 .85rem var(--body);cursor:pointer;padding:0;margin-left:6px}
+@media (max-width:820px){.hero .in{grid-template-columns:1fr;padding-block:36px 44px}}
+
+/* sections */
+section{padding-block:64px}
+.sec-head{display:grid;gap:10px;margin-bottom:30px;max-width:640px}
+.band{background:var(--tint)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.grid3{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid3{grid-template-columns:1fr}}
+.treat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:10px;align-content:start;text-align:left;font:inherit;color:inherit;cursor:pointer;transition:border-color .2s,transform .2s}
+.treat:hover{border-color:var(--accent);transform:translateY(-2px)}
+.treat .ic{width:46px;height:46px;border-radius:14px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.treat .more{font-size:.93rem;color:var(--muted)}
+.treat[aria-expanded="false"] .more{display:none}
+.treat .hint{font-size:.85rem;font-weight:600;color:var(--accent)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.step{background:var(--surface);border-radius:var(--r);padding:22px;display:grid;gap:8px;counter-increment:s}
+.step::before{content:counter(s);font-family:var(--display);font-weight:600;font-size:1.6rem;color:var(--accent);line-height:1}
+
+/* booking */
+.book{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media (max-width:860px){.book{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow);display:grid;gap:18px;min-width:0}
+.prog{display:flex;gap:6px}
+.prog i{flex:1;height:5px;border-radius:9px;background:var(--line)}
+.prog i.on{background:var(--accent)}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}
+legend{font-weight:700;margin-bottom:8px;padding:0}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt span{display:inline-block;padding:9px 15px;border-radius:999px;border:1.5px solid var(--line);cursor:pointer;font-weight:500;transition:all .15s}
+.opt input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opt input:focus-visible+span{outline:3px solid var(--mint);outline-offset:2px}
+label.f{display:grid;gap:6px;font-weight:600;font-size:.95rem}
+input[type=text],textarea{font:inherit;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+textarea{min-height:80px;resize:vertical}
+.nav-btns{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.err{color:#c0392b;font-size:.9rem;font-weight:600}
+.summary{background:var(--tint);border-radius:14px;padding:16px;display:grid;gap:6px;font-size:.96rem}
+.summary b{font-weight:600}
+.preview{white-space:pre-wrap;font-size:.92rem;background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px;color:var(--muted)}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:760px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 18px}
+summary{cursor:pointer;font-weight:600;padding:14px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.3rem;line-height:1;color:var(--accent);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding-bottom:16px;color:var(--muted)}
+
+/* location */
+.loc{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:stretch}
+@media (max-width:820px){.loc{grid-template-columns:1fr}}
+.mapcard{border-radius:24px;overflow:hidden;background:linear-gradient(135deg,var(--accent-soft),var(--tint));position:relative;min-height:240px;display:grid;place-items:center;text-decoration:none;border:1px solid var(--line)}
+.mapcard svg.grid{position:absolute;inset:0;width:100%;height:100%;color:var(--line)}
+.pin{position:relative;display:grid;justify-items:center;gap:10px;text-align:center;padding:16px}
+.pin .dot{width:56px;height:56px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--accent);display:grid;place-items:center;box-shadow:var(--shadow)}
+.pin .dot i{width:18px;height:18px;border-radius:50%;background:var(--accent-ink);display:block}
+.pin b{background:var(--surface);padding:6px 14px;border-radius:999px;font-weight:600;box-shadow:var(--shadow)}
+
+footer{border-top:1px solid var(--line);padding-block:26px;color:var(--muted);font-size:.9rem}
+footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+
+.fab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;width:58px;height:58px;border-radius:50%;background:#25a35a;color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-weight:600;font-size:.9rem;z-index:40}
+
+.rv{transition:transform .6s ease,opacity .6s ease}
+.rv.pre{transform:translateY(14px)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.rv.pre{transform:none;opacity:1}}
+.hours{display:grid;gap:4px;font-size:.95rem}
+.hours div{display:flex;justify-content:space-between;gap:12px}
+.hours .now{font-weight:700;color:var(--accent)}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.85rem;padding:4px 12px;border-radius:999px}
+.stat{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.stat b{font-family:var(--display);font-size:2.4rem;line-height:1;color:var(--accent)}
+.stars{color:var(--mint);letter-spacing:2px}
+</style>
+
+<div class="strip"><div class="in"><span class="tag">Demo</span><span>Modelo de demonstração. Os itens marcados como <b>exemplo</b> serão trocados pelos dados reais da clínica.</span></div></div>
+
+<header>
+  <div class="in">
+    <a class="brand" href="#inicio" aria-label="Vida Animal, início">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="9" fill="var(--accent)"/><path d="M16 9v14M9 16h14" stroke="var(--accent-ink)" stroke-width="4" stroke-linecap="round"/></svg>
+      <b>Vida Animal</b>
+    </a>
+    <button class="menu" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav id="nav">
+      <a href="#servicos">Serviços</a>
+      <a href="#agendar">Agendar</a>
+      <a href="#duvidas">Dúvidas</a>
+      <a href="#local">Onde estamos</a>
+      <a class="btn sm" href="#agendar">Agendar horário</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="hero">
+    <div class="in">
+      <div class="hero-copy">
+        <span class="eyebrow">Clínica veterinária e pet shop · Centro de Jales</span>
+        <h1>Saúde, banho e carinho para o seu pet, no Centro de Jales.</h1>
+        <p class="lead">Na Vida Animal você marca consulta, vacina ou banho pelo WhatsApp em poucos toques. Nota 4,8 no Google, com 104 avaliações.</p>
+        <div class="ctas">
+          <a class="btn" href="#agendar">Agendar horário</a>
+          <a class="btn alt" id="heroWa" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
+        <div class="facts">
+          <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>4,8 no Google · 104 avaliações</span>
+          <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Credenciada Dog Life</span>
+          <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Rua 2, Centro</span>
+        </div>
+      </div>
+
+      <aside class="card-info rv" aria-label="Contato rápido">
+        <div class="art">
+          <svg width="200" height="150" viewBox="0 0 200 150" fill="none" aria-hidden="true">
+            <ellipse cx="100" cy="138" rx="64" ry="8" fill="var(--line)"/>
+            <path d="M58 66c-10-20-2-38 10-36 9 2 10 14 8 24" fill="var(--accent)"/>
+            <path d="M142 66c10-20 2-38-10-36-9 2-10 14-8 24" fill="var(--accent)"/>
+            <ellipse cx="100" cy="84" rx="46" ry="42" fill="var(--surface)" stroke="var(--accent)" stroke-width="4"/>
+            <circle cx="83" cy="78" r="5" fill="var(--ink)"/><circle cx="117" cy="78" r="5" fill="var(--ink)"/>
+            <path d="M91 95c3-5 15-5 18 0-2 6-16 6-18 0Z" fill="var(--ink)"/>
+            <path d="M100 101v7M91 110c4 4 14 4 18 0" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+            <rect x="148" y="18" width="34" height="34" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+            <path d="M165 26v18M156 35h18" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+            <path d="M28 40c0 14 10 22 22 22" stroke="var(--mint)" stroke-width="4" stroke-linecap="round"/><circle cx="28" cy="34" r="6" fill="var(--accent-soft)" stroke="var(--mint)" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="body">
+          <div class="row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <div><small>Endereço</small>Rua 2 · Centro · Jales - SP</div>
+          </div>
+          <div class="row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+            <div><small>WhatsApp</small>(17) 99624-4310<button class="copy" data-copy="(17) 99624-4310">Copiar</button></div>
+          </div>
+          <div class="row">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div style="flex:1"><small>Horário</small>
+              <div class="hours" id="hours">
+                <div data-d="1,2,3,4,5"><span>Segunda a sexta</span><span>8h às 18h</span></div>
+                <div data-d="6"><span>Sábado</span><span>8h às 12h</span></div>
+                <div data-d="0"><span>Domingo</span><span>Fechado</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <section id="servicos" class="band">
+    <div class="in">
+      <div class="sec-head rv">
+        <span class="eyebrow">Serviços</span>
+        <h2>Clínica e pet shop no mesmo lugar <span class="tag">exemplo</span></h2>
+        <p class="muted">Toque em um serviço para ler mais. A clínica define a lista final, os textos e os preços.</p>
+      </div>
+      <div class="grid3" id="treatGrid"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="in">
+      <div class="sec-head rv">
+        <span class="eyebrow">Como funciona</span>
+        <h2>Do agendamento ao pet bem cuidado</h2>
+      </div>
+      <div class="steps">
+        <div class="step band rv"><h3>Escolha e agende</h3><p class="muted">Diga o que o seu pet precisa e o melhor período. O pedido chega direto no WhatsApp da clínica.</p></div>
+        <div class="step band rv"><h3>Confirmação</h3><p class="muted">A equipe responde com o horário disponível e tira suas dúvidas.</p></div>
+        <div class="step band rv"><h3>Atendimento</h3><p class="muted">Você traz o pet na Rua 2, no Centro, e a Vida Animal cuida do resto.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="agendar" class="band">
+    <div class="in book">
+      <div class="sec-head rv" style="margin:0">
+        <span class="eyebrow">Agendamento</span>
+        <h2>Marque o horário em 3 passos</h2>
+        <p class="muted">Funciona de verdade: no fim, o pedido abre no WhatsApp da clínica, já escrito. Os horários livres são confirmados pela equipe.</p>
+        <div class="summary" id="sumBox" aria-live="polite">
+          <div><b>Atendimento:</b> <span id="sumT">escolha ao lado</span></div>
+          <div><b>Período:</b> <span id="sumP">escolha ao lado</span></div>
+          <div><b>Pet:</b> <span id="sumN">ainda não informado</span></div>
+        </div>
+      </div>
+
+      <form class="panel" id="bookForm" novalidate>
+        <div class="prog" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+
+        <fieldset data-step="1">
+          <legend>1. O que o seu pet precisa?</legend>
+          <div class="opts" id="optT"></div>
+          <div class="opts" id="optS"></div>
+        </fieldset>
+
+        <fieldset data-step="2" hidden>
+          <legend>2. Qual o melhor dia e período?</legend>
+          <div class="opts" id="optD"></div>
+          <div class="opts" id="optP"></div>
+          <p class="muted" style="font-size:.9rem">Sábado o atendimento é só de manhã.</p>
+        </fieldset>
+
+        <fieldset data-step="3" hidden>
+          <legend>3. Você e o seu pet</legend>
+          <label class="f" for="fNome">Seu nome<input type="text" id="fNome" autocomplete="given-name" placeholder="Como podemos te chamar?"></label>
+          <label class="f" for="fPet">Nome, raça e idade do pet<input type="text" id="fPet" placeholder="Ex.: Mel, vira-lata, 3 anos"></label>
+          <label class="f" for="fObs">Quer contar algo? (opcional)<textarea id="fObs" placeholder="Ex.: está coçando a orelha há uns dias"></textarea></label>
+          <div class="preview" id="msgPrev"></div>
+        </fieldset>
+
+        <p class="err" id="err" hidden></p>
+        <div class="nav-btns">
+          <button type="button" class="btn alt sm" id="back" hidden>Voltar</button>
+          <button type="submit" class="btn" id="next" style="margin-left:auto">Continuar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section>
+    <div class="in">
+      <div class="sec-head rv">
+        <span class="eyebrow">No Google</span>
+        <h2>Bem avaliada pelos tutores de Jales</h2>
+      </div>
+      <div class="panel rv" style="max-width:520px">
+        <div class="stat"><b>4,8</b><span class="stars" aria-hidden="true">★★★★★</span><span class="muted">104 avaliações no Google</span></div>
+        <p class="muted">Veja o que os clientes dizem direto no Google Maps.</p>
+        <div><a class="btn alt sm" href="https://www.google.com/maps/search/?api=1&query=Vida%20Animal%20Cl%C3%ADnica%20Veterin%C3%A1ria%20e%20Pet%20Shop%2C%20R.%202%2C%20Jales%20-%20SP" target="_blank" rel="noopener">Ver avaliações</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="duvidas" class="band">
+    <div class="in">
+      <div class="sec-head rv">
+        <span class="eyebrow">Dúvidas</span>
+        <h2>Perguntas frequentes <span class="tag">exemplo</span></h2>
+      </div>
+      <div class="faq">
+        <details><summary>Como faço para marcar uma consulta?</summary><p>Use o agendamento desta página ou chame no WhatsApp (17) 99624-4310. A equipe confirma o dia e o horário com você.</p></details>
+        <details><summary>Qual o horário de atendimento?</summary><p>De segunda a sexta, das 8h às 18h, e sábado das 8h às 12h. Em feriados, confirme pelo WhatsApp.</p></details>
+        <details><summary>Vocês atendem o plano Dog Life?</summary><p>Sim, a Vida Animal é credenciada Dog Life. Pergunte pelo WhatsApp quais serviços o seu plano cobre.</p></details>
+        <details><summary>Quanto custa a consulta ou o banho?</summary><p>O valor depende do atendimento e do porte do pet. Pergunte pelo WhatsApp e a equipe passa o preço certinho.</p></details>
+        <details><summary>Onde fica a clínica?</summary><p>Na Rua 2, no Centro de Jales - SP, CEP 15703-002.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="local">
+    <div class="in loc">
+      <div class="panel rv" style="box-shadow:none">
+        <span class="eyebrow">Onde estamos</span>
+        <h2>No Centro de Jales</h2>
+        <div class="row">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <div>Rua 2 · Centro<br>Jales - SP · CEP 15703-002 <button class="copy" data-copy="Vida Animal Clínica Veterinária e Pet Shop, R. 2 - Centro, Jales - SP, 15703-002">Copiar</button></div>
+        </div>
+        <div class="row">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+          <div>(17) 99624-4310</div>
+        </div>
+        <div class="ctas">
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Vida%20Animal%20Cl%C3%ADnica%20Veterin%C3%A1ria%20e%20Pet%20Shop%2C%20R.%202%2C%20Jales%20-%20SP" target="_blank" rel="noopener">Como chegar</a>
+          <a class="btn alt" id="locWa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+      <a class="mapcard rv" href="https://www.google.com/maps/search/?api=1&query=Vida%20Animal%20Cl%C3%ADnica%20Veterin%C3%A1ria%20e%20Pet%20Shop%2C%20R.%202%2C%20Jales%20-%20SP" target="_blank" rel="noopener" aria-label="Abrir no Google Maps">
+        <svg class="grid" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <g stroke="currentColor" stroke-width="10" fill="none" stroke-linecap="round">
+            <path d="M-10 60 L410 60"/><path d="M-10 200 L410 200"/><path d="M100 -10 L100 270"/><path d="M300 -10 L300 270"/>
+          </g>
+          <g stroke="currentColor" stroke-width="4" fill="none" opacity=".7"><path d="M-10 130 L410 130"/><path d="M200 -10 L200 270"/></g>
+        </svg>
+        <div class="pin"><div class="dot"><i></i></div><b>Abrir no Google Maps</b></div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer><div class="in"><span>Vida Animal Clínica Veterinária e Pet Shop · Jales - SP · <a href="https://www.instagram.com/vidaanimaljales/" target="_blank" rel="noopener">@vidaanimaljales</a></span><span>Modelo de demonstração feito por Rafael · (17) 98219-4747</span></div></footer>
+<a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+</a>
+<div class="toast" id="toast" hidden></div>
+
+
+<script>
+const WA = "5517996244310";
+const wa = t => "https://wa.me/" + WA + (t ? "?text=" + encodeURIComponent(t) : "");
+const hello = "Olá! Vi o site da Vida Animal e gostaria de marcar um horário para o meu pet.";
+["heroWa","locWa","fab"].forEach(id => document.getElementById(id).href = wa(hello));
+
+/* today's hours highlight */
+const today = new Date().getDay();
+document.querySelectorAll("#hours [data-d]").forEach(r => { if (r.dataset.d.split(",").includes(String(today))) r.classList.add("now"); });
+
+const ico = {
+  cons:'<path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v3a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="12" r="2"/>',
+  vac:'<path d="m18 2 4 4M17 7l3-3M19 9l-8.5 8.5a2 2 0 0 1-2.8 0l-1.2-1.2a2 2 0 0 1 0-2.8L15 5"/><path d="m9 11 4 4M5 19l-3 3"/>',
+  exam:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M7.5 15h9"/>',
+  banho:'<path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M6 12V6a2 2 0 0 1 4 0"/><circle cx="14" cy="6" r="1"/><circle cx="17" cy="8" r="1"/>',
+  racao:'<path d="M4 11h16l-1.5 8a2 2 0 0 1-2 1.6h-9a2 2 0 0 1-2-1.6z"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  plano:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>'
+};
+const treats = [
+  {k:"cons", n:"Consultas", d:"Consulta clínica para cães e gatos, com avaliação completa e orientação para o tutor."},
+  {k:"vac", n:"Vacinas", d:"Vacinação e controle da carteirinha do pet. Pergunte quais vacinas estão em dia."},
+  {k:"exam", n:"Exames", d:"Exames de rotina para acompanhar a saúde do pet. Confirme pelo WhatsApp quais são feitos na clínica."},
+  {k:"banho", n:"Banho e tosa", d:"Banho, secagem, escovação e tosa conforme a raça. O valor depende do porte e da pelagem."},
+  {k:"racao", n:"Pet shop", d:"Rações, petiscos, remédios e acessórios para cães e gatos."},
+  {k:"plano", n:"Plano Dog Life", d:"A clínica é credenciada Dog Life. Pergunte pelo WhatsApp o que o seu plano cobre."}
+];
+const g = document.getElementById("treatGrid");
+treats.forEach(t => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "treat rv"; b.setAttribute("aria-expanded","false");
+  b.innerHTML = `<span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ico[t.k]}</svg></span><h3>${t.n}</h3><p class="more">${t.d}</p><span class="hint">Ver detalhes</span>`;
+  b.onclick = () => { const o = b.getAttribute("aria-expanded")==="true"; b.setAttribute("aria-expanded", String(!o)); b.querySelector(".hint").textContent = o ? "Ver detalhes" : "Agendar este"; };
+  b.querySelector(".hint").addEventListener("click", e => { if (b.getAttribute("aria-expanded")==="true") { e.stopPropagation(); pickT(t.n); location.hash = "#agendar"; } });
+  g.appendChild(b);
+});
+
+/* booking */
+function opts(el, name, list){ el.innerHTML = list.map((v,i)=>`<label class="opt"><input type="radio" name="${name}" id="${name}${i}" value="${v}"><span>${v}</span></label>`).join(""); }
+opts(document.getElementById("optT"), "t", ["Consulta","Vacina","Exame","Banho","Banho e tosa"]);
+opts(document.getElementById("optS"), "s", ["Cão","Gato"]);
+const days = []; const wd=["dom","seg","ter","qua","qui","sex","sáb"];
+for (let d=new Date(), n=0; days.length<5 && n<14; n++){ d.setDate(d.getDate()+1); if (d.getDay()!==0) days.push(`${wd[d.getDay()]} ${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}`); }
+opts(document.getElementById("optD"), "d", days);
+opts(document.getElementById("optP"), "p", ["Manhã","Tarde"]);
+
+const f = document.getElementById("bookForm"), steps=[...f.querySelectorAll("fieldset")], bars=[...f.querySelectorAll(".prog i")];
+let step = 1;
+const val = n => (f.querySelector(`input[name=${n}]:checked`)||{}).value;
+function pickT(n){ const map={Consultas:"Consulta",Vacinas:"Vacina",Exames:"Exame","Banho e tosa":"Banho e tosa"}; const i=[...f.querySelectorAll("input[name=t]")].find(x=>x.value===(map[n]||n)); if(i){i.checked=true; sync();} }
+function msg(){
+  const nome = document.getElementById("fNome").value.trim(), pet = document.getElementById("fPet").value.trim(), obs = document.getElementById("fObs").value.trim();
+  return `Olá! Meu nome é ${nome||"..."}. Gostaria de agendar ${(val("t")||"...").toLowerCase()} para ${pet||"o meu pet"} (${(val("s")||"...").toLowerCase()}).\nMelhor dia: ${val("d")||"..."}, período: ${val("p")||"..."}.` + (obs?`\nObservação: ${obs}`:"");
+}
+function sync(){
+  document.getElementById("sumT").textContent = val("t") ? val("t") + (val("s") ? " · " + val("s").toLowerCase() : "") : "escolha ao lado";
+  document.getElementById("sumP").textContent = val("d") ? `${val("d")}${val("p")?" · "+val("p"):""}` : "escolha ao lado";
+  document.getElementById("sumN").textContent = document.getElementById("fPet").value.trim() || "ainda não informado";
+  document.getElementById("msgPrev").textContent = msg();
+  /* sábado só de manhã */
+  const sab = (val("d")||"").startsWith("sáb"), tarde = f.querySelector('input[name=p][value="Tarde"]');
+  tarde.disabled = sab; tarde.parentElement.style.opacity = sab ? .4 : 1; if (sab && tarde.checked) { tarde.checked = false; }
+}
+f.addEventListener("input", sync); f.addEventListener("change", sync);
+function show(){
+  steps.forEach(s => s.hidden = Number(s.dataset.step)!==step);
+  bars.forEach((b,i)=>b.classList.toggle("on", i<step));
+  document.getElementById("back").hidden = step===1;
+  document.getElementById("next").textContent = step===3 ? "Enviar pelo WhatsApp" : "Continuar";
+  document.getElementById("err").hidden = true;
+}
+document.getElementById("back").onclick = () => { step--; show(); };
+f.addEventListener("submit", e => {
+  e.preventDefault();
+  const er = document.getElementById("err");
+  const fail = t => { er.textContent = t; er.hidden = false; };
+  if (step===1 && (!val("t")||!val("s"))) return fail("Escolha o atendimento e se é cão ou gato.");
+  if (step===2 && (!val("d")||!val("p"))) return fail("Escolha o dia e o período.");
+  if (step===3){
+    if (!document.getElementById("fNome").value.trim()) return fail("Escreva seu nome para a clínica saber quem é.");
+    const a = document.createElement("a"); a.href = wa(msg()); a.target="_blank"; a.rel="noopener"; document.body.appendChild(a); a.click(); a.remove();
+    toast("Abrindo o WhatsApp com seu pedido");
+    return;
+  }
+  step++; show();
+});
+show(); sync();
+
+/* menu, copy, toast */
+const mb = document.getElementById("menuBtn"), nav = document.getElementById("nav");
+mb.onclick = () => { const o = nav.classList.toggle("open"); mb.setAttribute("aria-expanded", String(o)); };
+nav.addEventListener("click", e => { if (e.target.closest("a")) { nav.classList.remove("open"); mb.setAttribute("aria-expanded","false"); } });
+function toast(t){ const el=document.getElementById("toast"); el.textContent=t; el.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>el.hidden=true,2200); }
+document.querySelectorAll(".copy").forEach(b => b.onclick = () => {
+  const t = b.dataset.copy;
+  (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(()=>toast("Copiado")).catch(()=>toast(t));
+});
+
+/* gentle reveal: visible at rest, animates only below the fold */
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.remove("pre"); io.unobserve(e.target); } }), {threshold:.12});
+  document.querySelectorAll(".rv").forEach(el => { if (el.getBoundingClientRect().top > innerHeight) { el.classList.add("pre"); io.observe(el); } });
+}
+</script>
+
+</body>
+</html>
