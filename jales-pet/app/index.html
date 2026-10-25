@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jales Pet App</title>
+<meta name="description" content="Modelo de app para Jales Pet. Toque para testar.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jales Pet · App">
+<meta property="og:description" content="Modelo de app para Jales Pet. Toque para testar.">
+<meta property="og:url" content="https://rafael-sabugari.github.io/demos/jales-pet/app/">
+<meta property="og:image" content="https://rafael-sabugari.github.io/demos/jales-pet/preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#b8470f">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Jales Pet">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+<body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: phone-framed pet shop app on desktop, full-screen on phones; 4 tabs, bath & grooming booking with pet details, saved bookings. */
+:root{
+  --bg:#f1e6d8; --app:#fbf7f1; --surface:#ffffff; --tint:#f5ece0; --ink:#2b1d12; --muted:#6b5646; --line:#eadccb;
+  --accent:#b8470f; --accent-ink:#ffffff; --accent-soft:#fbe3d2; --mint:#3f7d3a; --warn-bg:#fff1c9; --warn-ink:#6b4a00; --frame:#2b1d12;
+  --display:Fredoka,"Trebuchet MS",sans-serif; --body:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f0a06; --app:#18110c; --surface:#221912; --tint:#2a1f16; --ink:#f6ece2; --muted:#c3ac98; --line:#3d2e22;
+  --accent:#f59a5c; --accent-ink:#2a1306; --accent-soft:#3b2416; --mint:#6fb563; --warn-bg:#3a2e10; --warn-ink:#f3d58b; --frame:#000; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f0a06; --app:#18110c; --surface:#221912; --tint:#2a1f16; --ink:#f6ece2; --muted:#c3ac98; --line:#3d2e22;
+  --accent:#f59a5c; --accent-ink:#2a1306; --accent-soft:#3b2416; --mint:#6fb563; --warn-bg:#3a2e10; --warn-ink:#f3d58b; --frame:#000; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);display:flex;align-items:center;justify-content:center;gap:48px;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.side{max-width:300px;display:grid;gap:12px}
+.side h1{font-family:var(--display);font-weight:600;font-size:2rem;line-height:1.15;margin:0}
+.side p{margin:0;color:var(--muted)}
+.side .tag{justify-self:start}
+.tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--warn-bg);color:var(--warn-ink);padding:2px 7px;border-radius:999px;vertical-align:middle}
+.phone{width:390px;height:min(820px,calc(100vh - 48px));background:var(--frame);border-radius:48px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.3);flex:none}
+.screen{height:100%;border-radius:38px;overflow:hidden;background:var(--app);display:flex;flex-direction:column;position:relative}
+@media (max-width:760px){
+  body{padding:0;display:block}
+  .side{display:none}
+  .phone{width:100%;height:100%;border-radius:0;padding:0;box-shadow:none;background:var(--app)}
+  .screen{border-radius:0}
+}
+.top{padding:16px 18px 12px;display:flex;align-items:center;justify-content:space-between;background:var(--surface);border-bottom:1px solid var(--line)}
+.top b{font-family:var(--display);font-weight:600;font-size:1.25rem;color:var(--accent)}
+.top small{display:block;color:var(--muted);font-size:.78rem}
+.back{background:none;border:0;color:var(--accent);font:600 .95rem var(--body);cursor:pointer;padding:6px 0}
+main{flex:1;overflow-y:auto;position:relative}
+.view{padding:18px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-content:start;animation:in .28s ease}
+@keyframes in{from{transform:translateX(14px);opacity:.4}to{transform:none;opacity:1}}
+h2{font-family:var(--display);font-weight:600;font-size:1.45rem;line-height:1.2;margin:0;text-wrap:balance}
+h3{margin:0;font-size:1rem}
+p{margin:0}
+.muted{color:var(--muted)}
+.hero{background:linear-gradient(150deg,var(--accent),color-mix(in srgb,var(--accent) 60%,var(--mint)));color:var(--accent-ink);border-radius:22px;padding:20px;display:grid;gap:10px}
+.hero h2{color:inherit}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:600 1rem var(--body);text-decoration:none;padding:14px 18px;border-radius:14px;background:var(--accent);color:var(--accent-ink);width:100%}
+.btn.light{background:var(--surface);color:var(--accent)}
+.btn.ghost{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 8px;display:grid;justify-items:center;gap:6px;font:600 .8rem var(--body);color:var(--ink);cursor:pointer;text-align:center;text-decoration:none}
+.q svg{color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:8px}
+.list{display:grid;gap:10px}
+.item{display:flex;gap:12px;align-items:center;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.item .ic{width:42px;height:42px;flex:none;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.item small{display:block;color:var(--muted)}
+.item[aria-pressed="true"]{border-color:var(--accent);background:var(--tint)}
+.stepper{display:flex;gap:6px}
+.stepper i{flex:1;height:5px;border-radius:9px;background:var(--line)}
+.stepper i.on{background:var(--accent)}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.day{flex:none;width:64px;padding:10px 0;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);display:grid;justify-items:center;cursor:pointer;font:inherit;color:inherit}
+.day b{font-size:1.2rem}
+.day small{color:var(--muted);font-size:.75rem;text-transform:uppercase}
+.day[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.day[aria-pressed="true"] small{color:inherit}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.slot{padding:11px 0;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font:600 .95rem var(--body);color:var(--ink);cursor:pointer;font-variant-numeric:tabular-nums}
+.slot[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:9px 15px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font:600 .92rem var(--body);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.slot:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+label.f{display:grid;gap:6px;font-weight:600}
+input[type=text]{font:inherit;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+.sum{display:grid;gap:8px}
+.sum div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.sum div:last-child{border:0}
+.sum span{color:var(--muted)}
+.ok{display:grid;justify-items:center;text-align:center;gap:12px;padding-top:20px}
+.ok .circle{width:84px;height:84px;border-radius:50%;background:var(--mint);color:#fff;display:grid;place-items:center;animation:pop .4s ease}
+@keyframes pop{from{transform:scale(.6)}to{transform:scale(1)}}
+.appt{display:flex;gap:12px;align-items:center}
+.appt .date{width:54px;flex:none;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;justify-items:center;padding:6px 0;font-weight:700}
+.appt .date b{font-size:1.25rem;line-height:1}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--warn-bg);color:var(--warn-ink)}
+.empty{text-align:center;padding:30px 10px;display:grid;gap:10px;justify-items:center}
+.row{display:flex;gap:12px;align-items:flex-start}
+.row svg{flex:none;color:var(--accent);margin-top:2px}
+.row small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.copy{background:none;border:0;color:var(--accent);font:600 .85rem var(--body);cursor:pointer;padding:0;margin-left:6px}
+.foot{font-size:.75rem;color:var(--muted);text-align:center;padding:6px 0 2px}
+nav.tabs{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.tabs button{background:none;border:0;padding:10px 0 12px;display:grid;justify-items:center;gap:3px;font:600 .72rem var(--body);color:var(--muted);cursor:pointer;position:relative}
+nav.tabs button[aria-current="page"]{color:var(--accent)}
+nav.tabs .badge{position:absolute;top:6px;left:calc(50% + 6px);min-width:17px;height:17px;border-radius:9px;background:var(--mint);color:#fff;font-size:.66rem;display:grid;place-items:center;padding:0 4px}
+.toast{position:absolute;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--app);padding:9px 14px;border-radius:999px;font-weight:600;font-size:.85rem;white-space:nowrap;z-index:5}
+:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<aside class="side">
+  <span class="tag">Demonstração</span>
+  <h1>Jales Pet no celular do cliente</h1>
+  <p>Teste o app: escolha o serviço, o dia e o horário e conte sobre o pet. No final o pedido abre no WhatsApp da loja, já escrito.</p>
+  <p>Serviços e horários marcados como <b>exemplo</b> são simulação.</p>
+  <p style="font-size:.85rem">Modelo de demonstração feito por Rafael · (17) 98219-4747</p>
+</aside>
+
+<div class="phone">
+  <div class="screen">
+    <div class="top" id="top">
+      <div><b>Jales Pet</b><small>Av. João Amadeu · Centro de Jales</small></div>
+      <span class="tag">Demo</span>
+    </div>
+    <main id="main" aria-live="polite"></main>
+    <div class="toast" id="toast" hidden></div>
+    <nav class="tabs" aria-label="Navegação do app">
+      <button data-tab="inicio"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Início</button>
+      <button data-tab="agendar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg>Agendar</button>
+      <button data-tab="agenda"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4h6v3H9z"/><path d="M7 5H5v15h14V5h-2"/><path d="m9 13 2 2 4-4"/></svg>Meus pedidos<span class="badge" id="badge" hidden></span></button>
+      <button data-tab="contato"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>Contato</button>
+    </nav>
+  </div>
+</div>
+
+<script>
+const WA="5517996362390", TEL="(17) 99636-2390";
+const ADDR="Av. João Amadeu, 2483 · Centro, Jales - SP · CEP 15700-078";
+const MAPS="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent("Jales Pet, Av. João Amadeu, 2483, Jales - SP");
+const wa=t=>"https://wa.me/"+WA+(t?"?text="+encodeURIComponent(t):"");
+const I={
+  aval:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  banho:'<path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M6 12V6a2 2 0 0 1 4 0"/><circle cx="14" cy="6" r="1"/><circle cx="17" cy="8" r="1"/>',
+  tosa:'<circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.2 16 18 4M15.8 16 6 4"/>',
+  hig:'<path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11Z"/>',
+  hidr:'<path d="M7 3h10l-1 4H8z"/><path d="M8 7v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V7"/><path d="M10 12h4"/>',
+  cons:'<path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v3a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="12" r="2"/>',
+  racao:'<path d="M6 7h12l-1 13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1z"/><path d="M6 7l1-4h10l1 4"/><ellipse cx="12" cy="14" rx="2.5" ry="2"/>'
+};
+const svg=(p,s=22)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const TR=[
+  {k:"banho",n:"Banho",d:"Banho, secagem e escovação"},
+  {k:"tosa",n:"Banho e tosa",d:"Tosa na máquina ou na tesoura"},
+  {k:"hig",n:"Tosa higiênica",d:"Patas, barriga e região íntima"},
+  {k:"hidr",n:"Hidratação",d:"Para pelagem seca ou embaraçada"},
+  {k:"cons",n:"Consulta",d:"Se a loja tiver veterinário parceiro"}
+];
+const WD=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const DAYS=[]; for(let d=new Date(),n=0;DAYS.length<10&&n<20;n++){d.setDate(d.getDate()+1);if(d.getDay()!==0)DAYS.push({wd:WD[d.getDay()],dd:String(d.getDate()).padStart(2,"0"),mm:String(d.getMonth()+1).padStart(2,"0"),seed:d.getDate()});}
+const HRS=["08:00","09:00","10:00","11:00","13:30","14:30","15:30","16:30"];
+const busy=(seed,i)=>((seed*7+i*3)%5)===0;
+
+let S={tab:"inicio",step:1,t:null,day:null,hr:null,nome:"",pet:"",esp:null,porte:null};
+let appts=[]; try{appts=JSON.parse(localStorage.getItem("jp_appts")||"[]")}catch(e){}
+const save=()=>{try{localStorage.setItem("jp_appts",JSON.stringify(appts))}catch(e){}};
+const M=document.getElementById("main");
+
+function toast(t){const el=document.getElementById("toast");el.textContent=t;el.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>el.hidden=true,2000);}
+function go(tab){S.tab=tab;if(tab==="agendar"&&S.step>4)S.step=1;render();M.scrollTop=0;}
+
+function vInicio(){
+  const next=appts[0];
+  return `<div class="view">
+    <div class="hero"><span style="font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.85">Olá!</span>
+      <h2>Banho e tosa do seu pet em menos de 1 minuto.</h2>
+      <button class="btn light" data-go="agendar">Agendar agora</button></div>
+    <div class="quick">
+      <button class="q" data-go="agendar">${svg(I.aval)}Agendar</button>
+      <a class="q" href="${wa("Olá! Vi o app da Jales Pet e quero encomendar ração.")}" target="_blank" rel="noopener">${svg(I.racao)}Pedir ração</a>
+      <a class="q" href="${MAPS}" target="_blank" rel="noopener">${svg('<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/>')}Como chegar</a>
+    </div>
+    ${next?`<div class="card"><span class="muted" style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em">Seu próximo horário</span>${apptHtml(next)}</div>`:""}
+    <h3>Serviços <span class="tag">exemplo</span></h3>
+    <div class="list">${TR.slice(0,4).map(t=>`<button class="item" data-pick="${t.k}"><span class="ic">${svg(I[t.k])}</span><span><b>${t.n}</b><small>${t.d}</small></span></button>`).join("")}</div>
+    <p class="foot">Modelo de demonstração feito por Rafael · (17) 98219-4747</p>
+  </div>`;
+}
+function stepper(){return `<div class="stepper" aria-label="Passo ${S.step} de 4">${[1,2,3,4].map(i=>`<i class="${i<=S.step?"on":""}"></i>`).join("")}</div>`;}
+function vAgendar(){
+  if(S.step===5){const a=appts[0];return `<div class="view"><div class="ok"><div class="circle">${svg('<path d="m5 12 5 5L20 7"/>',40)}</div><h2>Pedido pronto!</h2><p class="muted">${a.t} para ${a.pet}, ${a.wd} ${a.dd}/${a.mm} às ${a.hr}. Está salvo em Meus pedidos. Envie pelo WhatsApp para a loja confirmar.</p></div>
+    <a class="btn" href="${wa(msg(a))}" target="_blank" rel="noopener">Enviar no WhatsApp da loja</a>
+    <button class="btn ghost" data-go="agenda">Ver meus pedidos</button></div>`;}
+  let body="";
+  if(S.step===1) body=`<h2>Qual serviço?</h2><span class="tag" style="justify-self:start">exemplo</span><div class="list">${TR.map(t=>`<button class="item" data-t="${t.k}" aria-pressed="${S.t===t.k}"><span class="ic">${svg(I[t.k])}</span><span><b>${t.n}</b><small>${t.d}</small></span></button>`).join("")}</div>`;
+  if(S.step===2) body=`<h2>Escolha o dia</h2><div class="days">${DAYS.map((d,i)=>`<button class="day" data-day="${i}" aria-pressed="${S.day===i}"><small>${d.wd}</small><b>${d.dd}</b><small>${d.mm}</small></button>`).join("")}</div>
+    ${S.day!==null?`<h3>Horários livres <span class="tag">exemplo</span></h3><div class="slots">${HRS.map((h,i)=>`<button class="slot" data-hr="${h}" aria-pressed="${S.hr===h}" ${busy(DAYS[S.day].seed,i)?"disabled":""}>${h}</button>`).join("")}</div>`:`<p class="muted">Toque em um dia para ver os horários.</p>`}`;
+  if(S.step===3) body=`<h2>Conte sobre o pet</h2><label class="f" for="pet">Nome do pet<input type="text" id="pet" value="${S.pet.replace(/"/g,"&quot;")}" placeholder="Ex.: Thor"></label>
+    <h3>É cão ou gato?</h3><div class="chips">${['Cão', 'Gato'].map(v=>`<button class="chip" data-esp="${v}" aria-pressed="${S.esp===v}">${v}</button>`).join("")}</div>
+    <h3>Porte</h3><div class="chips">${['Pequeno', 'Médio', 'Grande'].map(v=>`<button class="chip" data-porte="${v}" aria-pressed="${S.porte===v}">${v}</button>`).join("")}</div>
+    <label class="f" for="nome">Seu nome<input type="text" id="nome" value="${S.nome.replace(/"/g,"&quot;")}" placeholder="Ex.: Ana" autocomplete="given-name"></label>`;
+  if(S.step===4){const t=TR.find(x=>x.k===S.t),d=DAYS[S.day];body=`<h2>Confira seu pedido</h2><div class="card sum"><div><span>Serviço</span><b>${t.n}</b></div><div><span>Dia</span><b>${d.wd} ${d.dd}/${d.mm}</b></div><div><span>Horário</span><b>${S.hr}</b></div><div><span>Pet</span><b>${S.pet} · ${S.esp.toLowerCase()} ${S.porte.toLowerCase()}</b></div><div><span>Tutor</span><b>${S.nome}</b></div><div><span>Local</span><b style="text-align:right">Av. João Amadeu, 2483</b></div></div><p class="muted" style="font-size:.88rem">A loja confirma o horário e o valor pelo WhatsApp.</p>`;}
+  const can=(S.step===1&&S.t)||(S.step===2&&S.hr)||(S.step===3&&ok3())||S.step===4;
+  return `<div class="view">${stepper()}${body}<button class="btn" id="nextBtn" ${can?"":"disabled"}>${S.step===4?"Confirmar pedido":"Continuar"}</button></div>`;
+}
+function ok3(){return S.pet.trim()&&S.esp&&S.porte&&S.nome.trim();}
+function msg(a){return `Olá! Pedi pelo app da Jales Pet:\n${a.t}\n${a.wd} ${a.dd}/${a.mm} às ${a.hr}\nPet: ${a.pet} (${a.esp.toLowerCase()}, porte ${a.porte.toLowerCase()})\nTutor: ${a.nome}\nPodem confirmar o horário e o valor?`;}
+function apptHtml(a,i){return `<div class="appt"><div class="date"><small>${a.wd}</small><b>${a.dd}</b></div><div style="flex:1;min-width:0"><b>${a.t}</b><div class="muted">${a.hr} · ${a.pet}</div><span class="pill">Aguardando confirmação</span></div>${i!==undefined?`<button class="copy" data-del="${i}" aria-label="Cancelar pedido">Cancelar</button>`:""}</div>`;}
+function vAgenda(){
+  if(!appts.length) return `<div class="view"><div class="empty">${svg(I.aval,40)}<h2>Nenhum pedido ainda</h2><p class="muted">Quando você agendar um banho, ele aparece aqui.</p><button class="btn" data-go="agendar">Agendar banho</button></div></div>`;
+  return `<div class="view"><h2>Meus pedidos</h2>${appts.map((a,i)=>`<div class="card">${apptHtml(a,i)}<a class="btn ghost" style="padding:10px" href="${wa(msg(a))}" target="_blank" rel="noopener">Enviar no WhatsApp</a></div>`).join("")}</div>`;
+}
+function vContato(){
+  return `<div class="view"><h2>Fale com a loja</h2>
+    <div class="card"><div class="row">${svg('<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/>',20)}<div><small>Endereço</small>${ADDR}</div></div></div>
+    <div class="card"><div class="row">${svg('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',20)}<div><small>WhatsApp</small>${TEL}<button class="copy" data-copy="${TEL}">Copiar</button></div></div></div>
+    <div class="card"><div class="row">${svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',20)}<div><small>Horário</small>Consulte os horários pelo WhatsApp</div></div></div>
+    <div class="card"><div class="row">${svg(I.racao,20)}<div><small>Na loja</small>Rações e produtos para cães, gatos, aves e peixes</div></div></div>
+    <a class="btn" href="${wa("Olá! Vi o app da Jales Pet e quero falar com a loja.")}" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+    <a class="btn ghost" href="${MAPS}" target="_blank" rel="noopener">Como chegar</a>
+    <p class="foot">Modelo de demonstração feito por Rafael · (17) 98219-4747</p></div>`;
+}
+function render(){
+  M.innerHTML={inicio:vInicio,agendar:vAgendar,agenda:vAgenda,contato:vContato}[S.tab]();
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===S.tab?"page":"false"));
+  const bd=document.getElementById("badge");bd.hidden=!appts.length;bd.textContent=appts.length;
+  const top=document.getElementById("top");
+  top.firstElementChild.outerHTML=(S.tab==="agendar"&&S.step>1&&S.step<5)?`<button class="back" id="backBtn">‹ Voltar</button>`:`<div><b>Jales Pet</b><small>Av. João Amadeu · Centro de Jales</small></div>`;
+  const n=document.getElementById("nome"), p=document.getElementById("pet");
+  if(n){n.oninput=()=>{S.nome=n.value;document.getElementById("nextBtn").disabled=!ok3();};}
+  if(p){p.oninput=()=>{S.pet=p.value;document.getElementById("nextBtn").disabled=!ok3();};}
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.tab) return go(b.dataset.tab);
+  if(b.dataset.go) return go(b.dataset.go);
+  if(b.dataset.pick){S.t=b.dataset.pick;S.step=2;return go("agendar");}
+  if(b.dataset.t){S.t=b.dataset.t;return render();}
+  if(b.dataset.day!==undefined){S.day=+b.dataset.day;S.hr=null;return render();}
+  if(b.dataset.hr){S.hr=b.dataset.hr;return render();}
+  if(b.dataset.esp){S.esp=b.dataset.esp;return render();}
+  if(b.dataset.porte){S.porte=b.dataset.porte;return render();}
+  if(b.id==="backBtn"){S.step--;return render();}
+  if(b.id==="nextBtn"){
+    if(S.step<4){S.step++;render();M.scrollTop=0;if(S.step===3)document.getElementById("pet").focus();return;}
+    const t=TR.find(x=>x.k===S.t),d=DAYS[S.day];
+    appts.unshift({t:t.n,wd:d.wd,dd:d.dd,mm:d.mm,hr:S.hr,nome:S.nome.trim(),pet:S.pet.trim(),esp:S.esp,porte:S.porte});save();
+    S={...S,step:5};render();toast("Pedido salvo");return;
+  }
+  if(b.dataset.del!==undefined){appts.splice(+b.dataset.del,1);save();render();toast("Pedido cancelado");return;}
+  if(b.dataset.copy){const t=b.dataset.copy;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("Copiado")).catch(()=>toast(t));}
+});
+render();
+</script>
+
+<div id="pwaBar" hidden style="position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:50;background:#fff;color:#14262e;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.25);padding:12px 14px;display:flex;gap:12px;align-items:center;font:14px/1.35 system-ui,sans-serif">
+  <img src="icon-192.png" alt="" width="40" height="40" style="border-radius:10px;flex:none">
+  <div id="pwaTxt" style="flex:1"><b>Instale o app</b><br><span style="opacity:.75">Fica na tela do celular, como um app.</span></div>
+  <button id="pwaGo" style="background:#b8470f;color:#fff;border:0;border-radius:999px;padding:9px 14px;font:700 14px system-ui,sans-serif;cursor:pointer">Instalar</button>
+  <button id="pwaX" aria-label="Fechar" style="background:none;border:0;font-size:20px;line-height:1;color:#52707c;cursor:pointer;padding:4px">×</button>
+</div>
+<script>
+(function(){
+  if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(function(){});
+  var standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  var closed = false; try{ closed = sessionStorage.getItem("pwaX")==="1"; }catch(e){}
+  if(standalone || closed || innerWidth > 760) return;
+  var bar = document.getElementById("pwaBar"), go = document.getElementById("pwaGo"), txt = document.getElementById("pwaTxt"), ev = null;
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  document.getElementById("pwaX").onclick = function(){ bar.hidden = true; try{ sessionStorage.setItem("pwaX","1"); }catch(e){} };
+  addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); ev = e; bar.hidden = false; });
+  go.onclick = function(){
+    if(ev){ ev.prompt(); ev.userChoice.finally(function(){ bar.hidden = true; ev = null; }); return; }
+    txt.innerHTML = ios ? "<b>No iPhone:</b> toque em <b>Compartilhar</b> (quadrado com seta) e depois em <b>Adicionar à Tela de Início</b>."
+                        : "<b>No Android:</b> abra o menu <b>⋮</b> do Chrome e toque em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>.";
+    go.hidden = true;
+  };
+  if(ios) setTimeout(function(){ bar.hidden = false; }, 1500);
+  else setTimeout(function(){ if(!ev) bar.hidden = false; }, 4000);
+})();
+</script>
+</body>
+</html>
